@@ -3,3 +3,4 @@
 *.lock*
 terraform.tfvars
 .infracost/
+*.pem*
