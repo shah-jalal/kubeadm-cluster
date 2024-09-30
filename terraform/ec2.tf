@@ -50,8 +50,7 @@ resource "aws_network_interface" "kubenode" {
 resource "aws_instance" "kubenode" {
   for_each = toset(local.instances)
   ami      = data.aws_ami.ubuntu.image_id
-  # key_name      = aws_key_pair.kube_kp.key_name
-  key_name      = var.aws_key_pair_name
+  key_name      = aws_key_pair.kube_kp.key_name
   instance_type = "t3.medium"
   network_interface {
     device_index         = 0
@@ -78,8 +77,7 @@ resource "aws_instance" "kubenode" {
 resource "aws_instance" "student_node" {
   ami           = data.aws_ami.ubuntu.image_id
   instance_type = "t3.small"
-  # key_name      = aws_key_pair.kube_kp.key_name
-  key_name = var.aws_key_pair_name
+  key_name      = aws_key_pair.kube_kp.key_name
   vpc_security_group_ids = [
     aws_security_group.student_node.id,
     aws_security_group.egress_all.id
