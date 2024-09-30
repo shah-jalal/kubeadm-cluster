@@ -1,4 +1,5 @@
 .terraform/
+./terraform/.infracost/
 *.tfstate*
 *.lock*
 terraform.tfvars
