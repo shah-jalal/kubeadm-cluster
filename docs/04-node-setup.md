@@ -115,5 +115,4 @@ Perform all the following steps on each of `controlplane`, `node01` and `node02`
 If you used tmux or iterm2 synchronized panes for this section, you should disable the synchronization now.
 
 Next: [Control Plane setup](./05-controlplane.md)</br>
-Prev: Connectivity ([VirtualBox](../virtualbox/docs/03-connectivity.md)) ([Apple Silicon](../apple-silicon/docs/03-connectivity.md)) [AWS](../aws/docs/03-connectivity.md)
-
+Prev:Prev: [Connectivity](./03-connectivity.md)
