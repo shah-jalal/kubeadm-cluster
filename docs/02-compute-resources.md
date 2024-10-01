@@ -46,7 +46,7 @@ terraform version
 ## Clone this repo
 
 ```bash
-git clone https://github.com/kodekloudhub/certified-kubernetes-administrator-course.git
+git clone https://github.com/shah-jalal/kubeadm-cluster.git
 ```
 
 Now change into the `kubeadm-cluster/terraform` directory
