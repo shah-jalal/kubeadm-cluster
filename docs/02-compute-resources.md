@@ -1,17 +1,15 @@
 # Provisioning Compute Resources
 
-We will provision the following infrastructure. The infrastructure will be created by Terraform, so as not to spend too much of the lab time just getting that provisioned, and to allow you to focus on the cluster installation.
-
+We will provision the following infrastructure. The infrastructure will be created by Terraform.
 ![Infra](../images/kubeadm-aws-architecture.png)
 
 
-As can be seen in this diagram, we will create three EC2 instances to form the cluster and a further one `student-node` from which to perform the configuration. We build the infrastructure using Terraform from AWS CloudShell (so you don't have to install Terraform on your workstation), then log into `student-node` which can access the cluster nodes. This relationship between `student-node` and the cluster nodes is similar to CKA Ultimate Mocks and how the real exam works - you start on a separate node (in this case `student-node`), then use SSH to connect to cluster nodes. Note that SSH connections are only possible in the direction of the arrows. It is not possible to SSH from e.g. `controlplane` directly to `node01`. You must `exit` to `student-node` first. This is also how it is in the exam. `student-node` assumes the role of a [bastion host](https://en.wikipedia.org/wiki/Bastion_host).
+As can be seen in this diagram, we will create three EC2 instances to form the cluster and a further one `student-node` from which to perform the configuration. We build the infrastructure using Terraform from AWS CloudShell (so you don't have to install Terraform on your workstation), then log into `student-node` which can access the cluster nodes using SSH. Note that SSH connections are only possible in the direction of the arrows. It is not possible to SSH from e.g. `controlplane` directly to `node01`. You must `exit` to `student-node` first. `student-node` assumes the role of a [bastion host](https://en.wikipedia.org/wiki/Bastion_host).
 
 We will also set up direct connection from your workstation to the node ports of the workers so that you can browse any NodePort services you create (see security below).
 
 Some basic security will be configured:
 
-* Only the `student-node` will be able to access the cluster's API Server, and this is where you will run `kubectl` commands from when the cluster is running.
 * Only the `student-node` can SSH to the cluster nodes.
 * Ports required by Kubernetes itself (inc. etcd) and Weave CNI will be configured in security groups on the cluster nodes.
 
@@ -30,11 +28,7 @@ Other things that will be configured by the Terraform code
 
 Let's go ahead and get the infrastructure built!
 
-[Click here](https://kodekloud.com/topic/playground-aws/) to start a playground, and click `START LAB` to request a new AWS Cloud Playground instance. After a few seconds, you will receive a URL and your credentials to access AWS Cloud console. Sign into the console.
-
-Note that you must have KodeKloud Pro subscription to run an AWS playground. If you have your own AWS account, this should still work, however you will bear the cost for any resources created until you delete them.
-
-We will run this entire lab in AWS CloudShell which is a Linux terminal you run inside the AWS console and has most of what we need preconfigured, such as git and the AWS credentials needed by Terraform. [Click here](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-east-1) to open CloudShell - note that his link will not work until you have signed into the AWS console.
+We will run this entire lab in AWS CloudShell which is a Linux terminal you run inside the AWS console and has most of what we need preconfigured, such as git and the AWS credentials needed by Terraform. [Click here](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-east-1) to open CloudShell - note that this link will not work until you have signed into the AWS console.
 
 
 ## Install Terraform
@@ -139,8 +133,6 @@ We will install kubectl here so that we can run commands against the cluster whe
 
 ## Deleting the cluster
 
-If using KodeKloud playground, this isn't strictly necessary as resources will be deleted when the playground ends.
-
 If you are using your own account, this is *crucial* as you will be billed for the resources created until you delete them - unless of course you want to keep it around and pay. Recall that this is *not* a production hardened installation and could pose a security risk to your account if you leave it lying around.
 
 To delete
@@ -153,8 +145,6 @@ To delete
     ```
 
 ## Notes on the terraform code
-
-Those of you who are also studying our Terraform courses should look at the terraform files and try to understand what is happening here.
 
 One point of note is that for the `node` instances, we create network interfaces for them as separate resources, then attach these ENIs to the instances when they are built. The reason for this is so that the IP addresses of the instances can be known in advance, such that during instance creation `/etc/hosts` may be created by the user_data script.
 
