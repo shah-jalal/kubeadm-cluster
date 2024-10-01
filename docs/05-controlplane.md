@@ -6,13 +6,6 @@
 
 On the `controlplane` node
 
-1.  Set shell variables for the pod and network network CIDRs. The API server advertise address is using the predefined variable described in the [previous section](./04-node-setup.md)
-
-    ```bash
-    POD_CIDR=10.244.0.0/16
-    SERVICE_CIDR=10.96.0.0/16
-    ```
-
 1.  Start controlplane
 
     Here we are using arguments to `kubeadm` to ensure that it uses the networks and IP address we want rather than choosing defaults which may be incorrect.
