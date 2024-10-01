@@ -1,6 +1,6 @@
 # Connectivity
 
-In this lab, you will access the kubernetes nodes by SSH from `student-node` which you should now be logged into.
+You can access the kubernetes nodes by SSH from `student-node` which you should now be logged into.
 
 Check each one. You must `exit` back to `student-node` before trying the next host.
 
