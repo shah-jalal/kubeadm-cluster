@@ -50,7 +50,7 @@ Perform all the following steps on each of `controlplane`, `node01` and `node02`
     sudo apt-get install -y containerd
     ```
 
-1.  Configure the container runtime to use systemd Cgroups. This part is the bit many students miss, and if not done results in a controlplane that comes up, then all the pods start crashlooping. `kubectl` will also fail with an error like `The connection to the server x.x.x.x:6443 was refused - did you specify the right host or port?`
+1.  Configure the container runtime to use systemd Cgroups. If not done results in a controlplane that comes up, then all the pods start crashlooping. `kubectl` will also fail with an error like `The connection to the server x.x.x.x:6443 was refused - did you specify the right host or port?`
 
     1. Create default configuration
 
@@ -100,16 +100,6 @@ Perform all the following steps on each of `controlplane`, `node01` and `node02`
     sudo crictl config \
         --set runtime-endpoint=unix:///run/containerd/containerd.sock \
         --set image-endpoint=unix:///run/containerd/containerd.sock
-    ```
-
-1.  Prepare extra arguments for kubelet such that when it starts, it listens on the VM's primary network address and not any NAT one that may be present. This uses the predefined `PRIMARY_IP` environment variable discusseed earlier
-
-    Paste the following to the terminal
-
-    ```bash
-    cat <<EOF | sudo tee /etc/default/kubelet
-    KUBELET_EXTRA_ARGS='--node-ip ${PRIMARY_IP}'
-    EOF
     ```
 
 If you used tmux or iterm2 synchronized panes for this section, you should disable the synchronization now.
